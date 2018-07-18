@@ -4,7 +4,7 @@ body,
   margin: 0;
   padding: 0;
   width: 100%; /*добавил размеры карты*/
-  height: 500px;
+  height: 100%;
 }
 
 .details-info {

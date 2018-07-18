@@ -24,22 +24,31 @@ export default function initMap(ymaps, containerId) { //добавил default, 
   loadList().then(data => {
 	console.log(data); //проверил получение данных с api
     objectManager.add(data);
+	myMap.geoObjects.add(objectManager); //привязываем менеджер к нашей карте
   });
 
   // details
   objectManager.objects.events.add('click', event => {
+	  alert(1)
     const objectId = event.get('objectId');
+	console.log(objectId)
     const obj = objectManager.objects.getById(objectId);
+	  alert(2)
 
-    objectManager.objects.balloon.open(objectId);
 
     if (!obj.properties.details) {
       loadDetails(objectId).then(data => {
 		console.log(data);
         obj.properties.details = data;
+		console.log(obj)
         objectManager.objects.balloon.setData(obj);
+		objectManager.objects.balloon.open(objectId);
       });
     }
+	
+	  alert(3)
+    objectManager.objects.balloon.open(objectId);
+	  alert(4)
   });
 
   // filters
