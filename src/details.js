@@ -28,16 +28,13 @@ export function getDetailsContentLayout(ymaps) {
 	</div>	
     `,//добавил закрывающий тег div
     {
-      build: () => {
-		alert(6);
+      build: function () { //использовал обычную а не стрелочную функцию, т.к. используется другая область видимости
        this.constructor.superclass.build.call(this);
 
-		alert(7);
         const { details } = this.getData().object.properties;
         if (details) {
           const container = this.getElement().querySelector('.details-chart');
 
-		alert(8);
           this.connectionChart = createChart(
             container,
             details.chart,
@@ -46,7 +43,7 @@ export function getDetailsContentLayout(ymaps) {
         }
       },
 
-      clear: () => {
+      clear: function () {
         if (this.connectionChart) {
           this.connectionChart.destroy();
         }
