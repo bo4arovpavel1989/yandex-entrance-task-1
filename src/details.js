@@ -25,16 +25,19 @@ export function getDetailsContentLayout(ymaps) {
                 Идет загрузка данных...
             </div>
         {% endif %}
-    `,
+	</div>	
+    `,//добавил закрывающий тег div
     {
       build: () => {
-        BalloonContentLayout.superclass.build.call(this);
+		alert(6);
+       this.constructor.superclass.build.call(this);
 
+		alert(7);
         const { details } = this.getData().object.properties;
-
         if (details) {
           const container = this.getElement().querySelector('.details-chart');
 
+		alert(8);
           this.connectionChart = createChart(
             container,
             details.chart,

@@ -16,24 +16,16 @@ export default function initMap(ymaps, containerId) { //добавил default, 
     clusterDisableClickZoom: false,
     geoObjectOpenBalloonOnClick: false,
     geoObjectHideIconOnBalloonOpen: false,
-    geoObjectBalloonContentLayout: getDetailsContentLayout(ymaps)
+	geoObjectBalloonContentLayout: getDetailsContentLayout(ymaps)
   });
 
   objectManager.clusters.options.set('preset', 'islands#greenClusterIcons');
 
-  loadList().then(data => {
-	console.log(data); //проверил получение данных с api
-    objectManager.add(data);
-	myMap.geoObjects.add(objectManager); //привязываем менеджер к нашей карте
-  });
 
   // details
   objectManager.objects.events.add('click', event => {
-	  alert(1)
     const objectId = event.get('objectId');
-	console.log(objectId)
     const obj = objectManager.objects.getById(objectId);
-	  alert(2)
 
 
     if (!obj.properties.details) {
@@ -42,17 +34,15 @@ export default function initMap(ymaps, containerId) { //добавил default, 
         obj.properties.details = data;
 		console.log(obj)
         objectManager.objects.balloon.setData(obj);
-		objectManager.objects.balloon.open(objectId);
       });
     }
 	
-	  alert(3)
     objectManager.objects.balloon.open(objectId);
-	  alert(4)
+	
   });
 
   // filters
-  const listBoxControl = createFilterControl(ymaps);
+ /* const listBoxControl = createFilterControl(ymaps);
   myMap.controls.add(listBoxControl);
 
   var filterMonitor = new ymaps.Monitor(listBoxControl.state);
@@ -60,5 +50,12 @@ export default function initMap(ymaps, containerId) { //добавил default, 
     objectManager.setFilter(
       obj => filters[obj.isActive ? 'active' : 'defective']
     );
+  });*/
+  
+  
+  loadList().then(data => {
+	console.log(data); //проверил получение данных с api
+	myMap.geoObjects.add(objectManager); //привязываем менеджер к нашей карте
+    objectManager.add(data);
   });
 }
