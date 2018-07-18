@@ -2,8 +2,7 @@ const PUBLIC_PATH = require('path').join(__dirname, 'public');
 const { initBackendStub } = require('./utils/backend-stub');
 
 module.exports = {
-  mode: 'development',
-  entry: './src/index.js',
+  mode: 'development',  //удалил свойство entry, т.к. оно и так использует настройку по умолчанию
   output: {
     path: PUBLIC_PATH,
     filename: 'index.js'

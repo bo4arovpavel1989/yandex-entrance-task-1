@@ -3,6 +3,8 @@ body,
 #map {
   margin: 0;
   padding: 0;
+  width: 100%; /*добавил размеры карты*/
+  height: 500px;
 }
 
 .details-info {

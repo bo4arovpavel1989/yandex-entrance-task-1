@@ -2,7 +2,7 @@ import { loadList, loadDetails } from './api';
 import { getDetailsContentLayout } from './details';
 import { createFilterControl } from './filter';
 
-export function initMap(ymaps, containerId) {
+export default function initMap(ymaps, containerId) { //добавил default, т.к. это единственная функция, которую экспортирует модуль
   const myMap = new ymaps.Map(containerId, {
     center: [55.76, 37.64],
     controls: [],
@@ -22,6 +22,7 @@ export function initMap(ymaps, containerId) {
   objectManager.clusters.options.set('preset', 'islands#greenClusterIcons');
 
   loadList().then(data => {
+	console.log(data); //проверил получение данных с api
     objectManager.add(data);
   });
 
@@ -34,6 +35,7 @@ export function initMap(ymaps, containerId) {
 
     if (!obj.properties.details) {
       loadDetails(objectId).then(data => {
+		console.log(data);
         obj.properties.details = data;
         objectManager.objects.balloon.setData(obj);
       });

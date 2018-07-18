@@ -13,8 +13,8 @@ exports.initBackendStub = function(app) {
     const info = data[id];
     const details = cache[id] || (cache[id] = generateDetails(info));
 
-    res.json({ ...info, ...details });
-
-    return {};
+    res.json({ ...info, ...details }); 
+	
+	//удалил return {} за ненадобностью
   });
 };
