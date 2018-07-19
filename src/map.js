@@ -40,7 +40,8 @@ export function initMap(ymaps, containerId) {
 	  console.log(data); //проверил получение данных с api
 	  myMap.geoObjects.add(objectManager); //привязываем менеджер к нашей карте
       objectManager.add(data);
-  });
+	})
+    .catch(err=>console.log(err)); //добавляем обработку ошибок
   
   // details
   objectManager.objects.events.add('click', event => {
@@ -55,7 +56,8 @@ export function initMap(ymaps, containerId) {
 	      console.log(data); //проверил получение данных с api
           obj.properties.details = data;
           objectManager.objects.balloon.setData(obj);
-      });
+		})
+	    .catch(err=>console.log(err)); //добавляем обработку ошибок
     }
 	
 	
