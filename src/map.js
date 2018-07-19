@@ -35,10 +35,11 @@ export function initMap(ymaps, containerId) {
 	})
   });
 
-  loadList().then(data => {
-	console.log(data); //проверил получение данных с api
-	myMap.geoObjects.add(objectManager); //привязываем менеджер к нашей карте
-    objectManager.add(data);
+  loadList() //делаем цепочки промисов в едином стиле с переносом
+    .then(data => {
+	  console.log(data); //проверил получение данных с api
+	  myMap.geoObjects.add(objectManager); //привязываем менеджер к нашей карте
+      objectManager.add(data);
   });
   
   // details
@@ -49,10 +50,11 @@ export function initMap(ymaps, containerId) {
     objectManager.objects.balloon.open(objectId);
 
     if (!obj.properties.details) {
-      loadDetails(objectId).then(data => {
-	    console.log(data); //проверил получение данных с api
-        obj.properties.details = data;
-        objectManager.objects.balloon.setData(obj);
+      loadDetails(objectId) //делаем цепочки промисов в едином стиле с переносом
+	    .then(data => {
+	      console.log(data); //проверил получение данных с api
+          obj.properties.details = data;
+          objectManager.objects.balloon.setData(obj);
       });
     }
 	
