@@ -2,7 +2,7 @@ import { loadList, loadDetails } from './api';
 import { getDetailsContentLayout } from './details';
 import { createFilterControl } from './filter';
 
-export default function initMap(ymaps, containerId) { //добавил default, т.к. это единственная функция, которую экспортирует модуль
+export function initMap(ymaps, containerId) { 
   const myMap = new ymaps.Map(containerId, {
     center: [55.76, 37.64],
     controls: [],
