@@ -20,42 +20,54 @@ export default function initMap(ymaps, containerId) { //добавил default, 
   });
 
   objectManager.clusters.options.set('preset', 'islands#greenClusterIcons');
-
-
-  // details
-  objectManager.objects.events.add('click', event => {
-    const objectId = event.get('objectId');
-    const obj = objectManager.objects.getById(objectId);
-
-
-    if (!obj.properties.details) {
-      loadDetails(objectId).then(data => {
-		console.log(data);
-        obj.properties.details = data;
-		console.log(obj)
-        objectManager.objects.balloon.setData(obj);
-      });
-    }
-	
-    objectManager.objects.balloon.open(objectId);
-	
+  
+  // Будем менять цвет кластера, если в нем присутствует дефективный элемент
+  objectManager.clusters.events.add('add', function (e) {
+    const cluster = objectManager.clusters.getById(e.get('objectId')),
+    objects = cluster.properties.geoObjects;
+	  
+	objects.map((el,i)=>{
+	  if(!el.isActive){
+	      objectManager.clusters.setClusterOptions(cluster.id, {
+	      preset: 'islands#redClusterIcons'
+	    })
+	  }
+	})
   });
 
-  // filters
- /* const listBoxControl = createFilterControl(ymaps);
-  myMap.controls.add(listBoxControl);
-
-  var filterMonitor = new ymaps.Monitor(listBoxControl.state);
-  filterMonitor.add('filters', filters => {
-    objectManager.setFilter(
-      obj => filters[obj.isActive ? 'active' : 'defective']
-    );
-  });*/
-  
-  
   loadList().then(data => {
 	console.log(data); //проверил получение данных с api
 	myMap.geoObjects.add(objectManager); //привязываем менеджер к нашей карте
     objectManager.add(data);
   });
+  
+  // details
+  objectManager.objects.events.add('click', event => {
+    const objectId = event.get('objectId');
+    const obj = objectManager.objects.getById(objectId);
+
+    objectManager.objects.balloon.open(objectId);
+
+    if (!obj.properties.details) {
+      loadDetails(objectId).then(data => {
+	    console.log(data); //проверил получение данных с api
+        obj.properties.details = data;
+        objectManager.objects.balloon.setData(obj);
+      });
+    }
+	
+	
+  });
+
+  // filters
+  const listBoxControl = createFilterControl(ymaps);
+  myMap.controls.add(listBoxControl);
+
+  const filterMonitor = new ymaps.Monitor(listBoxControl.state); //раз уж мы придерживаемся стандарта es6, то так и продолжаем
+  filterMonitor.add('filters', filters => {
+    objectManager.setFilter(
+      obj => filters[obj.isActive ? 'active' : 'defective']
+    );
+  });
+  
 }

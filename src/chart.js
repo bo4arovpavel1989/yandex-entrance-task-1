@@ -40,7 +40,7 @@ export function createChart(container, data, isActive) {
         },
         scales: {
             xAxes: [{ ticks: { display: false } }],
-            yAxes: [{ ticks: { beginAtZero: true, max: 0 } }]
+            yAxes: [{ ticks: { beginAtZero: true, max: 10 } }] //исправил msx на 10, иначе график не отображается, т.к. фактическая линия идет выше 0
         }
     }
   });

@@ -29,12 +29,12 @@ export function getDetailsContentLayout(ymaps) {
     `,//добавил закрывающий тег div
     {
       build: function () { //использовал обычную а не стрелочную функцию, т.к. используется другая область видимости
-       this.constructor.superclass.build.call(this);
+       BalloonContentLayout.superclass.build.call(this);
 
         const { details } = this.getData().object.properties;
         if (details) {
           const container = this.getElement().querySelector('.details-chart');
-
+		  
           this.connectionChart = createChart(
             container,
             details.chart,
@@ -43,7 +43,7 @@ export function getDetailsContentLayout(ymaps) {
         }
       },
 
-      clear: function () {
+      clear: function () { //использовал обычную а не стрелочную функцию, т.к. используется другая область видимости
         if (this.connectionChart) {
           this.connectionChart.destroy();
         }
