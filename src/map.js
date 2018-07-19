@@ -63,7 +63,7 @@ export function initMap(ymaps, containerId) {
   const listBoxControl = createFilterControl(ymaps);
   myMap.controls.add(listBoxControl);
 
-  const filterMonitor = new ymaps.Monitor(listBoxControl.state); //раз уж мы придерживаемся стандарта es6, то так и продолжаем
+  const filterMonitor = new ymaps.Monitor(listBoxControl.state); //раз уж мы придерживаемся стандарта es6, то так и продолжаем - вместо var используем const
   filterMonitor.add('filters', filters => {
     objectManager.setFilter(
       obj => filters[obj.isActive ? 'active' : 'defective']
