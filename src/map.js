@@ -22,14 +22,14 @@ export function initMap(ymaps, containerId) {
   objectManager.clusters.options.set('preset', 'islands#greenClusterIcons');
   
   // Будем менять цвет кластера, если в нем присутствует дефективный элемент
-  objectManager.clusters.events.add('add', function (e) {
+  objectManager.clusters.events.add('add', e => {
     const cluster = objectManager.clusters.getById(e.get('objectId')),
     objects = cluster.properties.geoObjects;
 	  
 	objects.map((el,i)=>{
 	  if(!el.isActive){
 	      objectManager.clusters.setClusterOptions(cluster.id, {
-	      preset: 'islands#redClusterIcons'
+	        preset: 'islands#redClusterIcons'
 	    })
 	  }
 	})
